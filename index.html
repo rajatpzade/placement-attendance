@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Placement Batch Update</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -35,7 +35,7 @@
     .checkbox-group label {
       font-weight: normal;
     }
-    button {
+    button, .share-btn {
       margin-top: 20px;
       width: 100%;
       padding: 10px;
@@ -44,22 +44,33 @@
       border: none;
       font-size: 16px;
       cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
     }
-    button:hover {
+    button:hover, .share-btn:hover {
       background: #0056b3;
+    }
+    #buttons-container {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+    }
+    #buttons-container button,
+    #buttons-container .share-btn {
+      width: 48%;
     }
   </style>
 </head>
 <body>
-
   <h2>📘 Placement Batch Update</h2>
 
-  <form>
+  <form id="batchForm" onsubmit="return false;">
     <label for="date">📅 Date:</label>
-    <input type="date" id="date" name="date">
+    <input type="date" id="date" name="date" />
 
     <label for="trainer">👨‍🏫 Trainer Name:</label>
-    <input type="text" id="trainer" name="trainer" value="Rajatz">
+    <input type="text" id="trainer" name="trainer" value="Rajatz" />
 
     <label for="batch">🏷️ Placement Batch Name:</label>
     <select id="batch" name="batch">
@@ -73,30 +84,75 @@
 
     <label for="mode">🖥️ Batch Mode:</label>
     <select id="mode" name="mode">
-      <option value="online">Online</option>
-      <option value="offline">Offline</option>
+      <option value="Online">Online</option>
+      <option value="Offline">Offline</option>
     </select>
 
     <label for="attendance">👥 Attendance:</label>
-    <input type="text" id="attendance" name="attendance" placeholder="e.g. 12/15">
+    <input type="text" id="attendance" name="attendance" placeholder="e.g. 12/15" />
 
     <label for="day">📘 Day:</label>
-    <input type="text" id="day" name="day" placeholder="e.g. Day 6">
+    <input type="text" id="day" name="day" placeholder="e.g. Day 6" />
 
     <label>📝 Subtopics:</label>
     <div class="checkbox-group">
-      <label><input type="checkbox" name="subtopics" value="Students Analysis (QNA)"> Students Analysis (QNA)</label><br>
-      <label><input type="checkbox" name="subtopics" value="Introduction, Resume Building and Profile Optimization"> Introduction, Resume Building and Profile Optimization</label><br>
-      <label><input type="checkbox" name="subtopics" value="Roles and Responsibilities under CDEC"> Roles and Responsibilities under CDEC</label><br>
-      <label><input type="checkbox" name="subtopics" value="Documents"> Documents</label><br>
-      <label><input type="checkbox" name="subtopics" value="Introduction, Resume, and Profile Check"> Introduction, Resume, and Profile Check</label><br>
-      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on Linux Tools"> Discuss Scenario Based Questions on Linux Tools</label><br>
-      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on AWS Tools"> Discuss Scenario Based Questions on AWS Tools</label><br>
-      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on DevOps Tools"> Discuss Scenario Based Questions on DevOps Tools</label>
+      <label><input type="checkbox" name="subtopics" value="Students Analysis (QNA)" /> Students Analysis (QNA)</label><br />
+      <label><input type="checkbox" name="subtopics" value="Introduction, Resume Building and Profile Optimization" /> Introduction, Resume Building and Profile Optimization</label><br />
+      <label><input type="checkbox" name="subtopics" value="Roles and Responsibilities under CDEC" /> Roles and Responsibilities under CDEC</label><br />
+      <label><input type="checkbox" name="subtopics" value="Documents" /> Documents</label><br />
+      <label><input type="checkbox" name="subtopics" value="Introduction, Resume, and Profile Check" /> Introduction, Resume, and Profile Check</label><br />
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on Linux Tools" /> Discuss Scenario Based Questions on Linux Tools</label><br />
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on AWS Tools" /> Discuss Scenario Based Questions on AWS Tools</label><br />
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on DevOps Tools" /> Discuss Scenario Based Questions on DevOps Tools</label>
     </div>
 
-    <button type="submit">📤 Submit</button>
+    <div id="buttons-container">
+      <button id="copyBtn" type="button">📋 Copy Text</button>
+      <a href="#" id="whatsappBtn" class="share-btn" target="_blank" rel="noopener noreferrer">📱 Share on WhatsApp</a>
+    </div>
   </form>
 
+  <script>
+    function getFormDataText() {
+      const date = document.getElementById("date").value || "[Date not set]";
+      const trainer = document.getElementById("trainer").value || "[Trainer not set]";
+      const batch = document.getElementById("batch").value || "[Batch not selected]";
+      const mode = document.getElementById("mode").value || "[Mode not selected]";
+      const attendance = document.getElementById("attendance").value || "[Attendance not set]";
+      const day = document.getElementById("day").value || "[Day not set]";
+
+      // Get checked subtopics
+      const checkedBoxes = document.querySelectorAll('input[name="subtopics"]:checked');
+      const subtopics = checkedBoxes.length > 0
+        ? Array.from(checkedBoxes).map(cb => `▫️ ${cb.value}`).join("\n")
+        : "[No subtopics selected]";
+
+      return `📅 Date: ${date}
+👨‍🏫 Trainer Name: ${trainer}
+🏷️ Placement Batch Name: ${batch}
+🖥️ Batch Mode: ${mode}
+👥 Attendance: ${attendance}
+📘 Day: ${day}
+📝 Subtopics:
+${subtopics}`;
+    }
+
+    document.getElementById("copyBtn").addEventListener("click", () => {
+      const text = getFormDataText();
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
+      }).catch(() => {
+        alert("Failed to copy.");
+      });
+    });
+
+    document.getElementById("whatsappBtn").addEventListener("click", (e) => {
+      e.preventDefault();
+      const text = getFormDataText();
+      const encodedText = encodeURIComponent(text);
+      const whatsappUrl = `https://wa.me/?text=${encodedText}`;
+      window.open(whatsappUrl, "_blank");
+    });
+  </script>
 </body>
 </html>
