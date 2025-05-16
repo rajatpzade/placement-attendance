@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Placement Batch Update</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background: #f7f7f7;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .checkbox-group {
+      margin-top: 10px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📘 Placement Batch Update</h2>
+
+  <form>
+    <label for="date">📅 Date:</label>
+    <input type="date" id="date" name="date">
+
+    <label for="trainer">👨‍🏫 Trainer Name:</label>
+    <input type="text" id="trainer" name="trainer" value="Rajatz">
+
+    <label for="batch">🏷️ Placement Batch Name:</label>
+    <select id="batch" name="batch">
+      <option value="">-- Select Batch --</option>
+      <option>Placement Batch B20 (Online)</option>
+      <option>Placement B07 (Wakad)</option>
+      <option>Placement B08 (Indore)</option>
+      <option>Placement B25 (Nagpur)</option>
+      <option>Placement Batch B25 (Kothrud)</option>
+    </select>
+
+    <label for="mode">🖥️ Batch Mode:</label>
+    <select id="mode" name="mode">
+      <option value="online">Online</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <label for="attendance">👥 Attendance:</label>
+    <input type="text" id="attendance" name="attendance" placeholder="e.g. 12/15">
+
+    <label for="day">📘 Day:</label>
+    <input type="text" id="day" name="day" placeholder="e.g. Day 6">
+
+    <label>📝 Subtopics:</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="subtopics" value="Students Analysis (QNA)"> Students Analysis (QNA)</label><br>
+      <label><input type="checkbox" name="subtopics" value="Introduction, Resume Building and Profile Optimization"> Introduction, Resume Building and Profile Optimization</label><br>
+      <label><input type="checkbox" name="subtopics" value="Roles and Responsibilities under CDEC"> Roles and Responsibilities under CDEC</label><br>
+      <label><input type="checkbox" name="subtopics" value="Documents"> Documents</label><br>
+      <label><input type="checkbox" name="subtopics" value="Introduction, Resume, and Profile Check"> Introduction, Resume, and Profile Check</label><br>
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on Linux Tools"> Discuss Scenario Based Questions on Linux Tools</label><br>
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on AWS Tools"> Discuss Scenario Based Questions on AWS Tools</label><br>
+      <label><input type="checkbox" name="subtopics" value="Discuss Scenario Based Questions on DevOps Tools"> Discuss Scenario Based Questions on DevOps Tools</label>
+    </div>
+
+    <button type="submit">📤 Submit</button>
+  </form>
+
+</body>
+</html>
